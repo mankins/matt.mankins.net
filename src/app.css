@@ -1,0 +1,32 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-ink: #14161a;
+  --color-paper: #fbfaf8;
+  --color-muted: #6b7280;
+  --color-rule: #e3e0da;
+  --color-accent: #b4472e;
+  --font-sans: 'Inter var', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  @theme {
+    --color-ink: #ece9e3;
+    --color-paper: #14161a;
+    --color-muted: #9aa1ab;
+    --color-rule: #2b2f36;
+    --color-accent: #e0785c;
+  }
+}
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* One slide per viewport, snapped. Falls back to ordinary scrolling
+   wherever scroll-snap isn't supported. */
+.deck { scroll-snap-type: y mandatory; }
+.slide { scroll-snap-align: start; scroll-snap-stop: always; }
