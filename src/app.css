@@ -38,7 +38,7 @@ html { scroll-behavior: smooth; }
    wherever scroll-snap isn't supported. */
 .deck { scroll-snap-type: y mandatory; }
 
-/* Each slide is a solid block of one palette color, cycling every five.
+/* Each slide is a solid block of one palette color, cycling every six.
    `--slide-hue` is the only per-slide declaration, so re-ordering the cycle
    means moving one hex. The color is now only the field around the card —
    no text sits on it, so it carries no contrast requirement. */
@@ -50,12 +50,14 @@ html { scroll-behavior: smooth; }
   background-color: color-mix(in oklab, var(--slide-hue) var(--slide-mix), #15131a);
 }
 
-/* Ordered so no two touching slides share a neighbourhood of the ramp. */
-.slide:nth-child(5n + 1) { --slide-hue: #f5bb00; } /* gold   */
-.slide:nth-child(5n + 2) { --slide-hue: #8ea604; } /* olive  */
-.slide:nth-child(5n + 3) { --slide-hue: #ec9f05; } /* amber  */
-.slide:nth-child(5n + 4) { --slide-hue: #bf3100; } /* rust   */
-.slide:nth-child(5n + 5) { --slide-hue: #d76a03; } /* orange */
+/* Ordered so no two touching slides share a neighbourhood of the ramp. Cyan
+   is the one cool hue, so it leads and the warm ramp runs out behind it. */
+.slide:nth-child(6n + 1) { --slide-hue: #22aed1; } /* cyan   */
+.slide:nth-child(6n + 2) { --slide-hue: #f5bb00; } /* gold   */
+.slide:nth-child(6n + 3) { --slide-hue: #8ea604; } /* olive  */
+.slide:nth-child(6n + 4) { --slide-hue: #ec9f05; } /* amber  */
+.slide:nth-child(6n + 5) { --slide-hue: #bf3100; } /* rust   */
+.slide:nth-child(6n + 6) { --slide-hue: #d76a03; } /* orange */
 
 @media (prefers-color-scheme: dark) {
   .slide { --slide-mix: 48%; }
