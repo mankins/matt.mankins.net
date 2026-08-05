@@ -4,16 +4,19 @@
 
 <section
   id={section.id}
-  class="slide flex min-h-dvh w-full items-center px-6 py-24 sm:px-12"
+  class="slide flex min-h-dvh w-full items-center px-4 py-14 sm:px-12 sm:py-24"
 >
-  <div class="mx-auto w-full max-w-3xl">
+  <div class="card mx-auto w-full max-w-3xl">
     {#if section.kicker}
-      <p class="font-sans text-[11px] tracking-[0.18em] text-muted uppercase">
+      <p
+        class="font-sans text-[11px] tracking-[0.11em] text-muted uppercase
+               sm:tracking-[0.18em]"
+      >
         {section.kicker}
       </p>
     {/if}
 
-    <h2 class="mt-3 font-serif text-4xl leading-tight text-ink sm:text-5xl">
+    <h2 class="mt-3 font-serif text-3xl leading-tight text-ink sm:text-5xl">
       {section.title}
       {#if section.year}
         <span class="ml-3 align-middle font-sans text-sm text-muted tabular-nums">
@@ -51,8 +54,8 @@
       <p class="mt-8 flex flex-wrap gap-x-6 gap-y-2">
         {#each section.links as l}
           <a
-            class="font-sans text-sm text-accent underline decoration-accent/30
-                   underline-offset-4 transition hover:decoration-accent
+            class="py-1 font-sans text-sm text-accent underline decoration-accent/30
+                   underline-offset-4 transition hover:decoration-highlight
                    focus-visible:outline-2 focus-visible:outline-offset-2
                    focus-visible:outline-accent"
             href={l.href}

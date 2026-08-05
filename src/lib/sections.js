@@ -21,7 +21,7 @@ export const profile = {
   name: 'Matt Mankins',
   handle: '@mankins',
   email: 'mankins@gmail.com',
-  tagline: 'Builder. Engineer. Systems for humans and AI.',
+  tagline: 'Builder. Engineer. AI Bridging.',
   intro:
     '25+ years building production systems and the organizations around them. ' +
     'A decade shipping AI. Currently building an open-source agentic runtime.',
@@ -99,8 +99,8 @@ const allSections = [
     group: 'Now',
     kicker: 'Lorem Labs · reference application',
     title: 'Dripl.it',
-    year: '2025–',
-    blurb: 'Serialized reading delivered by email. Email is the entire interface.',
+    year: '2026–',
+    blurb: 'Serialized reading delivered by email. Email is the interface.',
     points: [
       {
         label: 'Retrieval you can defend',
@@ -165,34 +165,6 @@ const allSections = [
         href: 'https://apps.apple.com/us/app/cliproom-ai-video-editor/id6760618553?mt=12'
       }
     ]
-  },
-
-  {
-    id: 'the-faithful',
-    group: 'Now',
-    kicker: 'Producer · and built the platform',
-    title: 'The Faithful',
-    year: '2021–',
-    blurb:
-      'A feature documentary by Annie Berman, and the streaming and ' +
-      'virtual-cinema platform that released it through its festival run.',
-    points: [
-      {
-        label: 'Title launch, end to end',
-        text:
-          'Scheduled screenings and ticketing, Stripe checkout, entitlement-gated ' +
-          'playback (HLS through Mux, SMPTE timecode), a virtual theatre with live ' +
-          'chat, and an admin surface.'
-      },
-      {
-        label: 'Built to run itself',
-        text:
-          'SvelteKit on Cloud Run, Cloud Functions, and Firebase Hosting, with ' +
-          'secrets resolved per environment from Secret Manager and a pub/sub ' +
-          'video processing pipeline.'
-      }
-    ],
-    links: [{ label: 'the-faithful.com', href: 'https://www.the-faithful.com/' }]
   },
 
   {
@@ -273,7 +245,7 @@ const allSections = [
     blurb:
       'Led the division’s largest engineering group — consumer revenue, martech, ' +
       'ecommerce, and ads — across every Condé Nast property. Seven engineering ' +
-      'manager reports; 100+ including product and design.',
+      'manager reports.',
     points: [
       {
         label: 'Ads library and TTFM',
@@ -455,8 +427,8 @@ const allSections = [
     id: 'kudos',
     group: 'Earlier',
     kicker: 'Developer rewards infrastructure',
-    title: 'Kudos',
-    year: '2022–',
+    title: 'Semicolons.com',
+    year: '2022–2026',
     blurb: 'Paying the people whose open-source work everything else is built on.',
     points: [
       {
@@ -474,6 +446,33 @@ const allSections = [
           'FinCEN-compliant money-transfer architecture with built-in KYC.'
       }
     ]
+  },
+  {
+    id: 'the-faithful',
+    group: 'Earlier',
+    kicker: 'Producer · and built the platform',
+    title: 'The Faithful',
+    year: '1999-2021',
+    blurb:
+      'A feature documentary by Annie Berman, and the streaming and ' +
+      'virtual-cinema platform that released it through its festival run.',
+    points: [
+      {
+        label: 'Title launch, end to end',
+        text:
+          'Scheduled screenings and ticketing, Stripe checkout, entitlement-gated ' +
+          'playback (HLS through Mux, SMPTE timecode), a virtual theatre with live ' +
+          'chat, and an admin surface.'
+      },
+      {
+        label: 'Built to run itself',
+        text:
+          'SvelteKit on Cloud Run, Cloud Functions, and Firebase Hosting, with ' +
+          'secrets resolved per environment from Secret Manager and a pub/sub ' +
+          'video processing pipeline.'
+      }
+    ],
+    links: [{ label: 'the-faithful.com', href: 'https://www.the-faithful.com/' }]
   },
 
   {
@@ -641,10 +640,10 @@ const allSections = [
     title: 'Web2 / Web3 bridge for creators',
     year: '2022',
     blurb: '',
-    draft: true,
+    draft: false,
     points: [
       {
-        label: 'What I know',
+        label: 'Sell content via links',
         text:
           'Firebase backend and SvelteKit UI; an image service generating social ' +
           'PNGs on Canvas; multi-modal purchase flows including tokens (Solidity, ' +

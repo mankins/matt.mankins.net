@@ -53,28 +53,31 @@
   {#each ids as id}
     <span
       class="block h-1.5 w-1.5 rounded-full transition-colors duration-300
-             {current === id ? 'bg-accent' : 'bg-rule'}"
+             {current === id ? 'bg-highlight' : 'bg-rule'}"
     ></span>
   {/each}
 </div>
 
 <main bind:this={deck} class="deck h-dvh overflow-y-auto bg-paper text-ink">
-  <section id="intro" class="slide flex min-h-dvh items-center px-6 py-24 sm:px-12">
-    <div class="mx-auto w-full max-w-3xl">
-      <h1 class="font-serif text-5xl leading-none text-ink sm:text-7xl">
+  <section id="intro" class="slide flex min-h-dvh items-center px-4 py-14 sm:px-12 sm:py-24">
+    <div class="card mx-auto w-full max-w-3xl">
+      <h1 class="font-serif text-4xl leading-none text-ink sm:text-7xl">
         {profile.name}
       </h1>
-      <p class="mt-4 font-sans text-sm tracking-[0.18em] text-muted uppercase">
+      <p
+        class="mt-4 font-sans text-xs tracking-[0.11em] text-muted uppercase
+               sm:text-sm sm:tracking-[0.18em]"
+      >
         {profile.tagline}
       </p>
-      <p class="mt-8 max-w-2xl font-serif text-xl leading-relaxed text-ink/90">
+      <p class="mt-6 max-w-2xl font-serif text-lg leading-relaxed text-ink/90 sm:mt-8 sm:text-xl">
         {profile.intro}
       </p>
       <p class="mt-8 flex flex-wrap gap-x-6 gap-y-2">
         {#each profile.links as l}
           <a
-            class="font-sans text-sm text-accent underline decoration-accent/30
-                   underline-offset-4 transition hover:decoration-accent
+            class="py-1 font-sans text-sm text-accent underline decoration-accent/30
+                   underline-offset-4 transition hover:decoration-highlight
                    focus-visible:outline-2 focus-visible:outline-offset-2
                    focus-visible:outline-accent"
             href={l.href}
@@ -82,8 +85,27 @@
           >
         {/each}
       </p>
-      <p class="mt-16 font-sans text-xs text-muted">
-        Use the menu, or arrow keys, to move between sections.
+      <!-- Heroicons v2 `arrows-up-down`, inlined rather than pulling in an icon
+           package for a single glyph. Decorative, so the instruction it
+           replaced stays available to screen readers alongside it. -->
+      <p class="mt-10 sm:mt-16">
+        <svg
+          class="h-6 w-6 text-muted"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3 7.5 7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5"
+          />
+        </svg>
+        <span class="sr-only">
+          Use the menu, or the up and down arrow keys, to move between sections.
+        </span>
       </p>
     </div>
   </section>
@@ -92,21 +114,24 @@
     <Slide {section} />
   {/each}
 
-  <footer class="slide flex min-h-dvh items-center px-6 py-24 sm:px-12">
-    <div class="mx-auto w-full max-w-3xl">
-      <h2 class="font-serif text-4xl text-ink sm:text-5xl">Get in touch</h2>
+  <footer class="slide flex min-h-dvh items-center px-4 py-14 sm:px-12 sm:py-24">
+    <div class="card mx-auto w-full max-w-3xl">
+      <h2 class="font-serif text-3xl text-ink sm:text-5xl">Get in touch</h2>
       <p class="mt-5 max-w-2xl font-serif text-lg leading-relaxed text-ink/90">
         The common thread has always been building production systems around
         emerging technology. If that's useful to you, say hello.
       </p>
       <p class="mt-8">
+        <!-- `break-all` so a long address can't push the card wider than a
+             narrow screen; inline-block keeps the tap target a full line. -->
         <a
-          class="font-sans text-lg text-accent underline decoration-accent/30
-                 underline-offset-4 transition hover:decoration-accent"
+          class="inline-block py-1 font-sans text-base break-all text-accent underline
+                 decoration-accent/30 underline-offset-4 transition
+                 hover:decoration-highlight sm:text-lg"
           href="mailto:{profile.email}">{profile.email}</a
         >
       </p>
-      <p class="mt-16 font-sans text-xs text-muted">
+      <p class="mt-10 font-sans text-xs text-muted sm:mt-16">
         {profile.handle} · built with SvelteKit
       </p>
     </div>

@@ -2,21 +2,29 @@
 
 @theme {
   --color-ink: #14161a;
-  --color-paper: #fbfaf8;
+  --color-paper: #fdf8f1;
   --color-muted: #6b7280;
   --color-rule: #e3e0da;
-  --color-accent: #b4472e;
+  --color-accent: #bf3100;
+  --color-highlight: #ff0099;
   --font-sans: 'Inter var', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
 }
 
+/* Plain `:root`, not `@theme` — Tailwind v4 only reads `@theme` at the top
+   level, and silently hoists a nested one into `:root`, dropping the media
+   query. That made these dark values apply in every color scheme. The tokens
+   are declared above; this only overrides them. */
 @media (prefers-color-scheme: dark) {
-  @theme {
+  :root {
     --color-ink: #ece9e3;
-    --color-paper: #14161a;
+    --color-paper: #15131a;
     --color-muted: #9aa1ab;
     --color-rule: #2b2f36;
-    --color-accent: #e0785c;
+    /* Lifted toward the gold end of the ramp so links clear AA on the dark
+       paper — #bf3100 is far too dark to read against it. */
+    --color-accent: #ec9f05;
+    --color-highlight: #ff3bb0;
   }
 }
 
@@ -29,4 +37,67 @@ html { scroll-behavior: smooth; }
 /* One slide per viewport, snapped. Falls back to ordinary scrolling
    wherever scroll-snap isn't supported. */
 .deck { scroll-snap-type: y mandatory; }
-.slide { scroll-snap-align: start; scroll-snap-stop: always; }
+
+/* Each slide is a solid block of one palette color, cycling every five.
+   `--slide-hue` is the only per-slide declaration, so re-ordering the cycle
+   means moving one hex. The color is now only the field around the card —
+   no text sits on it, so it carries no contrast requirement. */
+.slide {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  /* Light mode shows the palette neat; `--slide-mix` deepens it after dark. */
+  --slide-mix: 100%;
+  background-color: color-mix(in oklab, var(--slide-hue) var(--slide-mix), #15131a);
+}
+
+/* Ordered so no two touching slides share a neighbourhood of the ramp. */
+.slide:nth-child(5n + 1) { --slide-hue: #f5bb00; } /* gold   */
+.slide:nth-child(5n + 2) { --slide-hue: #8ea604; } /* olive  */
+.slide:nth-child(5n + 3) { --slide-hue: #ec9f05; } /* amber  */
+.slide:nth-child(5n + 4) { --slide-hue: #bf3100; } /* rust   */
+.slide:nth-child(5n + 5) { --slide-hue: #d76a03; } /* orange */
+
+@media (prefers-color-scheme: dark) {
+  .slide { --slide-mix: 48%; }
+}
+
+/* Most slides are taller than a phone screen — the longest is around 2.1x —
+   and mandatory snap on an overflowing slide keeps yanking the reader back to
+   its top before they reach the end of it. `proximity` still settles on a
+   slide when you land near one, but leaves long slides free to scroll. The
+   `always` stop goes too: it forbids passing more than one snap point per
+   gesture, which turns a 19-slide deck into 19 separate flicks. Keyed to
+   height as well as width, so landscape phones and short desktop windows get
+   the same treatment. Must stay after the `.slide` rule above — same
+   specificity, so source order decides. */
+@media (max-width: 40rem), (max-height: 44rem) {
+  .deck { scroll-snap-type: y proximity; }
+  .slide { scroll-snap-stop: normal; }
+}
+
+/* The content block: paper panel, heavy square border, hard offset shadow.
+   No blur and no radius — the shadow is a flat displaced copy, which is what
+   gives the style its cut-paper look. */
+.card {
+  background-color: var(--color-paper);
+  border: 2px solid var(--color-ink);
+  box-shadow: var(--card-lift) var(--card-lift) 0 var(--card-shadow);
+  padding: 1.5rem 1.25rem;
+  --card-lift: 0.5rem;
+  --card-shadow: color-mix(in oklab, #14161a 42%, transparent);
+}
+
+@media (min-width: 640px) {
+  .card { padding: 3rem 3.5rem; border-width: 3px; --card-lift: 1rem; }
+}
+
+@media (prefers-color-scheme: dark) {
+  /* The deepened field still sits well above black, so the shadow keeps
+     reading — it just needs more weight to separate from a dark card. */
+  .card { --card-shadow: rgb(0 0 0 / 0.62); }
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-highlight) 30%, transparent);
+  color: var(--color-ink);
+}

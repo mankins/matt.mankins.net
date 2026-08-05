@@ -1,7 +1,16 @@
 <script>
-  import { groups, sections } from '$lib/sections.js';
+  import { groups, profile, sections } from '$lib/sections.js';
 
   let { open = $bindable(false), current = '' } = $props();
+
+  // Matched on host rather than label so renaming the link in sections.js
+  // doesn't silently drop it from the menu. Email comes from profile.email,
+  // which is the canonical field — profile.links only mirrors it.
+  const github = profile.links.find((l) => l.href.includes('github.com'));
+  const elsewhere = [
+    github && { label: 'GitHub', href: github.href, hint: github.href.replace(/^https?:\/\//, '') },
+    { label: 'Email', href: `mailto:${profile.email}`, hint: profile.email }
+  ].filter(Boolean);
 
   // Trap focus and close on Escape while the menu is open, so keyboard and
   // screen-reader users aren't stranded behind the overlay.
@@ -47,15 +56,42 @@
 </button>
 
 {#if open}
+  <!-- overscroll-contain: without it, scrolling past either end of the menu
+       chains through to the deck behind, so the reader closes the menu onto a
+       different slide than the one they opened it from. -->
   <nav
     id="site-menu"
-    class="fixed inset-0 z-40 overflow-y-auto bg-paper/97 px-6 py-20 backdrop-blur-sm
-           sm:px-12"
+    class="fixed inset-0 z-40 overflow-y-auto overscroll-contain bg-paper/97 px-4
+           py-20 backdrop-blur-sm sm:px-12"
     aria-label="Sections"
   >
     <div class="mx-auto max-w-3xl">
+      <h2 class="mb-3 font-sans text-[11px] tracking-[0.18em] text-muted uppercase">
+        Elsewhere
+      </h2>
+      <ul class="border-t border-rule">
+        {#each elsewhere as e}
+          <li class="border-b border-rule">
+            <a
+              class="group flex items-baseline justify-between gap-4 py-3
+                     focus-visible:outline-2 focus-visible:outline-offset-2
+                     focus-visible:outline-accent"
+              href={e.href}
+              rel="noopener"
+              target={e.href.startsWith('mailto:') ? null : '_blank'}
+              onclick={() => (open = false)}
+            >
+              <span class="font-serif text-xl text-ink transition-colors group-hover:text-accent">
+                {e.label}
+              </span>
+              <span class="shrink-0 font-sans text-xs break-all text-muted">{e.hint}</span>
+            </a>
+          </li>
+        {/each}
+      </ul>
+
       {#each groups as group}
-        <h2 class="mt-10 mb-3 font-sans text-[11px] tracking-[0.18em] text-muted uppercase first:mt-0">
+        <h2 class="mt-10 mb-3 font-sans text-[11px] tracking-[0.18em] text-muted uppercase">
           {group}
         </h2>
         <ul class="border-t border-rule">
