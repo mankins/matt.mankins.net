@@ -1,5 +1,5 @@
 <script>
-  import { groups, profile, sections } from '$lib/sections.js';
+  import { groups, profile, sections, showYears } from '$lib/sections.js';
 
   let { open = $bindable(false), current = '' } = $props();
 
@@ -109,7 +109,9 @@
                 >
                   {s.title}{#if s.draft}<span class="ml-2 align-middle font-sans text-[10px] tracking-wider text-muted uppercase">draft</span>{/if}
                 </span>
-                <span class="shrink-0 font-sans text-xs text-muted tabular-nums">{s.year}</span>
+                {#if showYears}
+                  <span class="shrink-0 font-sans text-xs text-muted tabular-nums">{s.year}</span>
+                {/if}
               </button>
             </li>
           {/each}

@@ -1,4 +1,6 @@
 <script>
+  import { showYears } from '$lib/sections.js';
+
   let { section } = $props();
 </script>
 
@@ -18,7 +20,7 @@
 
     <h2 class="mt-3 font-serif text-3xl leading-tight text-ink sm:text-5xl">
       {section.title}
-      {#if section.year}
+      {#if showYears && section.year}
         <span class="ml-3 align-middle font-sans text-sm text-muted tabular-nums">
           {section.year}
         </span>

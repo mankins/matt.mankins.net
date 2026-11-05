@@ -4,7 +4,8 @@
 //   id       url hash and menu anchor
 //   title    slide heading
 //   kicker   small label above the title
-//   year     right-aligned in the menu
+//   year     shown beside the slide title and right-aligned in the menu,
+//            when `showYears` (below) is on
 //   blurb    one or two sentences, sets the frame
 //   points   [{ label, text }] — the substance
 //   links    [{ label, href }]
@@ -16,6 +17,12 @@
 // HTML, so an unfinished section can sit here indefinitely without leaking.
 
 import { dev } from "$app/environment";
+
+/**
+ * Dates are temporarily hidden. Flip to true to show each section's `year`
+ * again, on the slides and in the menu. The `year` values are left in place.
+ */
+export const showYears = false;
 
 export const profile = {
   name: "Matt Mankins",
@@ -33,6 +40,124 @@ export const profile = {
 };
 
 const allSections = [
+  {
+    id: "conde-nast",
+    group: "Work",
+    kicker: "Director of Engineering, Monetization",
+    title: "Condé Nast",
+    year: "2017-2020",
+    blurb:
+      "Led the division’s largest engineering group — consumer revenue, martech, " +
+      "ecommerce, and ads — across every Condé Nast property. Seven engineering " +
+      "manager reports.",
+    points: [
+      {
+        label: "Ads library and TTFM",
+        text:
+          "Rebuilt the ad library around time-to-first-money, a metric I introduced " +
+          "to align engineering and revenue. Viewability and impression " +
+          "instrumentation over Google Ad Manager, with first-money slot metrics " +
+          "that distinguish paid inventory from everything else.",
+      },
+      {
+        label: "Event platform",
+        text:
+          "The event tier behind every property — browser beacons into Kafka, " +
+          "enriched server-side, acks=all against a 15ms batching window, a " +
+          "firehose topic plus per-application topics so each consumer sets its own " +
+          "retention, indexed to Elasticsearch under a content-hash document id so " +
+          "a replayed event lands once.",
+      },
+      {
+        label: "Segmentation",
+        text:
+          "A signal service inside the ad request path: parallel fan-out to " +
+          "pluggable segmenters under a 500ms timeout, failing open rather than " +
+          "delaying the ad call, with hash-bucketed rollout per user. Behavioral, " +
+          "entitlement, and modeled lookalike audiences.",
+      },
+      {
+        label: "Paywall",
+        text:
+          "A database-less edge paywall supporting dramatic revenue growth at no " +
+          "latency cost (JWT, VCL).",
+      },
+      {
+        label: "The part that lasted",
+        text: "Managers I hired and grew have since gone on to Apple, Amazon, and Google.",
+      },
+    ],
+  },
+
+  {
+    id: "dmetrics",
+    group: "Work",
+    kicker: "COO / VP Engineering",
+    title: "dMetrics · Minsky",
+    year: "2016",
+    blurb:
+      "An early AI/NLP startup with a team of PhDs. I named and shipped its " +
+      "product, Minsky — after Marvin.",
+    points: [
+      {
+        label: "ML training and serving infrastructure",
+        text:
+          "Designed the production pipeline that trained and served adaptive-learning " +
+          "NLP models — offline training runs and the online path both (Apache " +
+          "Spark, Java, AWS microservices).",
+      },
+      {
+        label: "Research to production",
+        text:
+          "Led the ML/NLP researchers, and built the interfaces that made model " +
+          "output legible to the ad agencies and pharmaceutical companies who " +
+          "bought it. Taking research into production is a translation problem as " +
+          "much as an engineering one.",
+      },
+    ],
+    links: [{ label: "minsky.ai", href: "https://www.minsky.ai/" }],
+  },
+
+  {
+    id: "fast-company",
+    group: "Work",
+    kicker: "CTO",
+    title: "Fast Company",
+    year: "2011-2014",
+    blurb:
+      "Grew engineering from one person to a full UX, frontend, backend, and " +
+      "infrastructure team, and moved the magazine to the cloud.",
+    points: [
+      {
+        label: "Event-driven rendering",
+        text:
+          "A microservice rendering layer keeping multiple CMSes aligned in " +
+          "production (ZeroMQ, Node.js). The same architecture Thanks, Computer is " +
+          "built on, a decade later.",
+      },
+      {
+        label: "Cloud migration",
+        text:
+          "Moved the data center to EC2, cutting infrastructure cost about 25% " +
+          "while absorbing millions of monthly readers and several production " +
+          "releases a day.",
+      },
+      {
+        label: "NLP auto-linking",
+        text:
+          "Machine learning over editorial copy for navigation, SEO, and ad " +
+          "context — text-based algorithms to engage readers by interest. ML that " +
+          "showed up in revenue.",
+      },
+    ],
+    links: [
+      {
+        label: "diginomica interview, 2014",
+        href: "https://diginomica.com/running-media-cloud-style-qa-fast-company-cto-matt-mankins",
+      },
+    ],
+  },
+
   {
     id: "thanks-computer",
     group: "Now",
@@ -237,55 +362,6 @@ const allSections = [
   },
 
   {
-    id: "conde-nast",
-    group: "Work",
-    kicker: "Director of Engineering, Monetization",
-    title: "Condé Nast",
-    year: "2017-2020",
-    blurb:
-      "Led the division’s largest engineering group — consumer revenue, martech, " +
-      "ecommerce, and ads — across every Condé Nast property. Seven engineering " +
-      "manager reports.",
-    points: [
-      {
-        label: "Ads library and TTFM",
-        text:
-          "Rebuilt the ad library around time-to-first-money, a metric I introduced " +
-          "to align engineering and revenue. Viewability and impression " +
-          "instrumentation over Google Ad Manager, with first-money slot metrics " +
-          "that distinguish paid inventory from everything else.",
-      },
-      {
-        label: "Event platform",
-        text:
-          "The event tier behind every property — browser beacons into Kafka, " +
-          "enriched server-side, acks=all against a 15ms batching window, a " +
-          "firehose topic plus per-application topics so each consumer sets its own " +
-          "retention, indexed to Elasticsearch under a content-hash document id so " +
-          "a replayed event lands once.",
-      },
-      {
-        label: "Segmentation",
-        text:
-          "A signal service inside the ad request path: parallel fan-out to " +
-          "pluggable segmenters under a 500ms timeout, failing open rather than " +
-          "delaying the ad call, with hash-bucketed rollout per user. Behavioral, " +
-          "entitlement, and modeled lookalike audiences.",
-      },
-      {
-        label: "Paywall",
-        text:
-          "A database-less edge paywall supporting dramatic revenue growth at no " +
-          "latency cost (JWT, VCL).",
-      },
-      {
-        label: "The part that lasted",
-        text: "Managers I hired and grew have since gone on to Apple, Amazon, and Google.",
-      },
-    ],
-  },
-
-  {
     id: "xrpl",
     group: "Work",
     kicker: "Executive Director",
@@ -349,75 +425,6 @@ const allSections = [
       {
         label: "Privacy-preserving advertising",
         text: "Prototyped in-Firefox advertising that does not depend on third-party identity.",
-      },
-    ],
-  },
-
-  {
-    id: "dmetrics",
-    group: "Work",
-    kicker: "COO / VP Engineering",
-    title: "dMetrics · Minsky",
-    year: "2016",
-    blurb:
-      "An early AI/NLP startup with a team of PhDs. I named and shipped its " +
-      "product, Minsky — after Marvin.",
-    points: [
-      {
-        label: "ML training and serving infrastructure",
-        text:
-          "Designed the production pipeline that trained and served adaptive-learning " +
-          "NLP models — offline training runs and the online path both (Apache " +
-          "Spark, Java, AWS microservices).",
-      },
-      {
-        label: "Research to production",
-        text:
-          "Led the ML/NLP researchers, and built the interfaces that made model " +
-          "output legible to the ad agencies and pharmaceutical companies who " +
-          "bought it. Taking research into production is a translation problem as " +
-          "much as an engineering one.",
-      },
-    ],
-    links: [{ label: "minsky.ai", href: "https://www.minsky.ai/" }],
-  },
-
-  {
-    id: "fast-company",
-    group: "Work",
-    kicker: "CTO",
-    title: "Fast Company",
-    year: "2011-2014",
-    blurb:
-      "Grew engineering from one person to a full UX, frontend, backend, and " +
-      "infrastructure team, and moved the magazine to the cloud.",
-    points: [
-      {
-        label: "Event-driven rendering",
-        text:
-          "A microservice rendering layer keeping multiple CMSes aligned in " +
-          "production (ZeroMQ, Node.js). The same architecture Thanks, Computer is " +
-          "built on, a decade later.",
-      },
-      {
-        label: "Cloud migration",
-        text:
-          "Moved the data center to EC2, cutting infrastructure cost about 25% " +
-          "while absorbing millions of monthly readers and several production " +
-          "releases a day.",
-      },
-      {
-        label: "NLP auto-linking",
-        text:
-          "Machine learning over editorial copy for navigation, SEO, and ad " +
-          "context — text-based algorithms to engage readers by interest. ML that " +
-          "showed up in revenue.",
-      },
-    ],
-    links: [
-      {
-        label: "diginomica interview, 2014",
-        href: "https://diginomica.com/running-media-cloud-style-qa-fast-company-cto-matt-mankins",
       },
     ],
   },
